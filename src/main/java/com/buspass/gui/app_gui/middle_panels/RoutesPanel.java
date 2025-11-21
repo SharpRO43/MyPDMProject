@@ -4,6 +4,8 @@
  */
 package com.buspass.gui.app_gui.middle_panels;
 
+import com.buspass.gui.app_gui.dialogs.RouteUpdatePanel;
+import com.buspass.gui.app_gui.dialogs.RouteCreatePanel;
 import com.buspass.queries.RouteQuery;
 
 /**
@@ -150,7 +152,17 @@ public class RoutesPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void updateRouteButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_updateRouteButtonActionPerformed
-        // TODO add your handling code here:
+        java.awt.Window owner = javax.swing.SwingUtilities.getWindowAncestor(this);
+        final javax.swing.JDialog dialog = new javax.swing.JDialog(owner, "Update Route",
+                java.awt.Dialog.ModalityType.APPLICATION_MODAL);
+        RouteUpdatePanel panel = new RouteUpdatePanel(routeQuery);
+        dialog.setDefaultCloseOperation(javax.swing.JDialog.DISPOSE_ON_CLOSE);
+        dialog.setContentPane(panel);
+        dialog.pack();
+        dialog.setLocationRelativeTo(this);
+        panel.getCancelButton().addActionListener(e -> dialog.dispose());
+
+        dialog.setVisible(true); // blocks until closed
     }// GEN-LAST:event_updateRouteButtonActionPerformed
 
     private void getRouteByIdButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_getRouteByIdButtonActionPerformed
@@ -197,7 +209,19 @@ public class RoutesPanel extends javax.swing.JPanel {
     }// GEN-LAST:event_getAllRoutesButtonActionPerformed
 
     private void createRouteButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_createRouteButtonActionPerformed
+        java.awt.Window owner = javax.swing.SwingUtilities.getWindowAncestor(this);
+        final javax.swing.JDialog dialog = new javax.swing.JDialog(owner, "Create Route",
+                java.awt.Dialog.ModalityType.APPLICATION_MODAL);
+        RouteCreatePanel panel = new RouteCreatePanel(routeQuery);
+        dialog.setDefaultCloseOperation(javax.swing.JDialog.DISPOSE_ON_CLOSE);
+        dialog.setContentPane(panel);
         
+        dialog.pack();
+        dialog.setLocationRelativeTo(this);
+        panel.getCancelButton().addActionListener(e -> dialog.dispose());
+        panel.getCreateButton().addActionListener(e -> dialog.dispose());
+
+        dialog.setVisible(true); // blocks until closed
     }// GEN-LAST:event_createRouteButtonActionPerformed
 
     private void deleteRouteButtonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_deleteRouteButtonActionPerformed
