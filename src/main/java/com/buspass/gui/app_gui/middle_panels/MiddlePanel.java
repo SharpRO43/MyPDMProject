@@ -5,7 +5,6 @@ import java.util.Map;
 import javax.swing.table.DefaultTableModel;
 
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 
 public class MiddlePanel {
     public void setTableContents(JTable table, List<Map<String, Object>> results) {

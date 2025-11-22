@@ -12,6 +12,7 @@ VALUES
 
 INSERT INTO `User` (Username, UserPassword, FullName, Age, Phone, UserAddress, UserRoleID)
 VALUES
+('Admin', "admin", 'I AM BETTER', 67, '113', 'An India Telecom Center', 2),
 ('UserA', NULL, 'Nguyen Van A', 24, '0912345678', '81 LA', 1),
 ('UserB', NULL, 'Le Van B', 30, '0987654321', '35 WA', 1),
 ('UserC', NULL, 'Nguyen Van C', 52, '0965432987', '56 TA', 2),

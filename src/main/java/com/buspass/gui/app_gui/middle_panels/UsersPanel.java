@@ -18,7 +18,7 @@ import com.buspass.utils.*;
  *
  * @author USER
  */
-public class UsersPanel extends javax.swing.JPanel {
+public class UsersPanel extends javax.swing.JPanel implements InMiddlePanel{
 
     /**
      * Creates new form UsersPanel
@@ -376,4 +376,24 @@ public class UsersPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane tableScrollPane;
     private javax.swing.JButton updateUserButton;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void hideAdminButtons() {
+        createUserButton.setVisible(false);
+        deleteUserButton.setVisible(false);
+        findIdButton.setVisible(false);
+        getAllUsersButton.setVisible(false);
+        getUserByIdButton.setVisible(false);
+        updateUserButton.setVisible(false);
+    }
+
+    @Override
+    public void showAdminButtons() {
+        createUserButton.setVisible(true);
+        deleteUserButton.setVisible(true);
+        findIdButton.setVisible(true);
+        getAllUsersButton.setVisible(true);
+        getUserByIdButton.setVisible(true);
+        updateUserButton.setVisible(true);
+    }
 }

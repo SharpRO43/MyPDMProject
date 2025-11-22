@@ -34,12 +34,14 @@ public class AppPanel extends JPanel implements PanelSwitcher {
         add(cards, BorderLayout.CENTER);
 
         // show login by default
-        // cardLayout.show(cards, AUTH);
         cardLayout.show(cards, AUTH);
+        // cardLayout.show(cards, MAIN);
     }
 
     @Override
     public void showPanel(String name) {
+        if (name == MAIN)
+            mainPanel.updateButtons();
         // ensure change happens on EDT
         if (SwingUtilities.isEventDispatchThread()) {
             cardLayout.show(cards, name);

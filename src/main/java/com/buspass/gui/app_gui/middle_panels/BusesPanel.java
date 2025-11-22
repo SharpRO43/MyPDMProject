@@ -4,20 +4,15 @@
  */
 package com.buspass.gui.app_gui.middle_panels;
 
-import javax.swing.JOptionPane;
-
 import com.buspass.gui.app_gui.dialogs.BusCreatePanel;
 import com.buspass.gui.app_gui.dialogs.BusUpdatePanel;
-import com.buspass.gui.app_gui.dialogs.UserUpdatePanel;
 import com.buspass.queries.BusQuery;
-import com.buspass.utils.AuthUtils;
-import com.buspass.utils.DialogUtils;
 
 /**
  *
  * @author USER
  */
-public class BusesPanel extends javax.swing.JPanel {
+public class BusesPanel extends javax.swing.JPanel implements InMiddlePanel {
 
     /**
      * Creates new form UsersPanel
@@ -322,4 +317,18 @@ public class BusesPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane tableScrollPane;
     private javax.swing.JButton updateBusButton;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void hideAdminButtons() {
+        createBusButton.setVisible(false);
+        deleteBusButton.setVisible(false);
+        updateBusButton.setVisible(false);
+    }
+
+    @Override
+    public void showAdminButtons() {
+        createBusButton.setVisible(true);
+        deleteBusButton.setVisible(true);
+        updateBusButton.setVisible(true);
+    }
 }

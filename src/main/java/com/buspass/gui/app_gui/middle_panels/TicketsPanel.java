@@ -10,7 +10,7 @@ import com.buspass.queries.BusQuery;
  *
  * @author USER
  */
-public class TicketsPanel extends javax.swing.JPanel {
+public class TicketsPanel extends javax.swing.JPanel implements InMiddlePanel{
 
     /**
      * Creates new form UsersPanel
@@ -37,7 +37,7 @@ public class TicketsPanel extends javax.swing.JPanel {
         myTicketsButton = new javax.swing.JButton();
         changeToTripButton = new javax.swing.JButton();
         getTicketsOfUserButton = new javax.swing.JButton();
-        deleteTicket = new javax.swing.JButton();
+        deleteTicketButton = new javax.swing.JButton();
         tableScrollPane = new javax.swing.JScrollPane();
         resultTable = new javax.swing.JTable();
         headerPanel = new javax.swing.JPanel();
@@ -91,14 +91,14 @@ public class TicketsPanel extends javax.swing.JPanel {
         getTicketsOfUserButton.addActionListener(this::getTicketsOfUserButtonActionPerformed);
         buttonPanel.add(getTicketsOfUserButton);
 
-        deleteTicket.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        deleteTicket.setText("Remove Ticket");
-        deleteTicket.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        deleteTicket.setMaximumSize(new java.awt.Dimension(180, 40));
-        deleteTicket.setMinimumSize(new java.awt.Dimension(180, 40));
-        deleteTicket.setPreferredSize(new java.awt.Dimension(180, 40));
-        deleteTicket.addActionListener(this::deleteTicketActionPerformed);
-        buttonPanel.add(deleteTicket);
+        deleteTicketButton.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        deleteTicketButton.setText("Delete Ticket");
+        deleteTicketButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        deleteTicketButton.setMaximumSize(new java.awt.Dimension(180, 40));
+        deleteTicketButton.setMinimumSize(new java.awt.Dimension(180, 40));
+        deleteTicketButton.setPreferredSize(new java.awt.Dimension(180, 40));
+        deleteTicketButton.addActionListener(this::deleteTicketButtonActionPerformed);
+        buttonPanel.add(deleteTicketButton);
 
         buttonScrollPane.setViewportView(buttonPanel);
 
@@ -164,9 +164,9 @@ public class TicketsPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_changeToTripButtonActionPerformed
 
-    private void deleteTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteTicketActionPerformed
+    private void deleteTicketButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteTicketButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_deleteTicketActionPerformed
+    }//GEN-LAST:event_deleteTicketButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -174,7 +174,7 @@ public class TicketsPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane buttonScrollPane;
     private javax.swing.JButton buyTicketButton;
     private javax.swing.JButton changeToTripButton;
-    private javax.swing.JButton deleteTicket;
+    private javax.swing.JButton deleteTicketButton;
     private javax.swing.JButton getTicketsOfUserButton;
     private javax.swing.JLabel headerLabel;
     private javax.swing.JPanel headerPanel;
@@ -182,4 +182,18 @@ public class TicketsPanel extends javax.swing.JPanel {
     private javax.swing.JTable resultTable;
     private javax.swing.JScrollPane tableScrollPane;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void hideAdminButtons() {
+        changeToTripButton.setVisible(false);
+        deleteTicketButton.setVisible(false);
+        getTicketsOfUserButton.setVisible(false);
+    }
+
+    @Override
+    public void showAdminButtons() {
+        changeToTripButton.setVisible(true);
+        deleteTicketButton.setVisible(true);
+        getTicketsOfUserButton.setVisible(true);
+    }
 }

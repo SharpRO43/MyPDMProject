@@ -11,7 +11,7 @@ import com.buspass.queries.PaymentQuery;
  *
  * @author USER
  */
-public class PaymentsPanel extends javax.swing.JPanel {
+public class PaymentsPanel extends javax.swing.JPanel implements InMiddlePanel {
 
     /**
      * Creates new form UsersPanel
@@ -239,4 +239,18 @@ public class PaymentsPanel extends javax.swing.JPanel {
     private javax.swing.JTable resultTable;
     private javax.swing.JScrollPane tableScrollPane;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void hideAdminButtons() {
+        createTransactionButton.setVisible(false);
+        deletePaymentButton.setVisible(false);
+        getPaymentsOfUserButton.setVisible(false);
+    }
+
+    @Override
+    public void showAdminButtons() {
+        createTransactionButton.setVisible(true);
+        deletePaymentButton.setVisible(true);
+        getPaymentsOfUserButton.setVisible(false);
+    }
 }

@@ -7,6 +7,7 @@ package com.buspass.gui.app_gui;
 import com.buspass.gui.app_gui.middle_panels.TicketsPanel;
 import com.buspass.gui.app_gui.middle_panels.PaymentsPanel;
 import com.buspass.gui.app_gui.middle_panels.DriversPanel;
+import com.buspass.gui.app_gui.middle_panels.InMiddlePanel;
 import com.buspass.gui.app_gui.middle_panels.CusomSQLPanel;
 import com.buspass.gui.app_gui.middle_panels.BusesPanel;
 import com.buspass.gui.app_gui.middle_panels.RoutesPanel;
@@ -30,11 +31,8 @@ public class MainPanel extends javax.swing.JPanel {
      */
     UserLoginSession userLoginSession;
 
-    private PanelSwitcher switcher;
-
-    private UsersPanel usersPanel;
-    private JPanel[] panels = new JPanel[9];
-
+    public static final int NUMBER_OF_MIDDLE_PANELS = 9;
+    public static final int NUMBER_OF_INMIDDLE_PANELS = 8;
     private static final int USERS_PANEL      = 1;
     private static final int DRIVERS_PANEL    = 2;
     private static final int BUSES_PANEL      = 3;
@@ -43,6 +41,12 @@ public class MainPanel extends javax.swing.JPanel {
     private static final int TICKETS_PANEL    = 6;
     private static final int PAYMENTS_PANEL   = 7;
     private static final int CUSTOM_SQL_PANEL = 8;
+
+    private PanelSwitcher switcher;
+
+    private UsersPanel usersPanel;
+    private JPanel[] panels = new JPanel[NUMBER_OF_MIDDLE_PANELS];
+    private InMiddlePanel[] middlePanels = new InMiddlePanel[NUMBER_OF_INMIDDLE_PANELS];
 
     public void setPanelSwitcher(PanelSwitcher s) {
         this.switcher = s;
@@ -53,17 +57,32 @@ public class MainPanel extends javax.swing.JPanel {
         scrollPane.getVerticalScrollBar().setUnitIncrement(20);
 
         this.userLoginSession = userLoginSession;
-        // routesButton.setVisible(false);
-        // tripButton.setVisible(false);
 
-        panels[USERS_PANEL]      = new UsersPanel();
-        panels[DRIVERS_PANEL]    = new DriversPanel();
-        panels[BUSES_PANEL]      = new BusesPanel();
-        panels[ROUTES_PANEL]     = new RoutesPanel(); 
-        panels[TRIPS_PANEL]      = new TripsPanel();
-        panels[TICKETS_PANEL]    = new TicketsPanel();
-        panels[PAYMENTS_PANEL]   = new PaymentsPanel(userLoginSession);
-        panels[CUSTOM_SQL_PANEL] = new CusomSQLPanel();
+        UsersPanel    usersPanel    = new UsersPanel();
+        DriversPanel  driversPanel  = new DriversPanel();
+        BusesPanel    busesPanel    = new BusesPanel();
+        RoutesPanel   routesPanel   = new RoutesPanel(); 
+        TripsPanel    tripsPanel    = new TripsPanel();
+        TicketsPanel  ticketsPanel  = new TicketsPanel();
+        PaymentsPanel paymentsPanel = new PaymentsPanel(userLoginSession);
+        CusomSQLPanel cusomSQLPanel = new CusomSQLPanel();
+
+        panels[USERS_PANEL]      = usersPanel;
+        panels[DRIVERS_PANEL]    = driversPanel; 
+        panels[BUSES_PANEL]      = busesPanel;   
+        panels[ROUTES_PANEL]     = routesPanel;  
+        panels[TRIPS_PANEL]      = tripsPanel;   
+        panels[TICKETS_PANEL]    = ticketsPanel; 
+        panels[PAYMENTS_PANEL]   = paymentsPanel;
+        panels[CUSTOM_SQL_PANEL] = cusomSQLPanel;
+
+        middlePanels[USERS_PANEL]      = usersPanel;
+        middlePanels[DRIVERS_PANEL]    = driversPanel; 
+        middlePanels[BUSES_PANEL]      = busesPanel;   
+        middlePanels[ROUTES_PANEL]     = routesPanel;  
+        middlePanels[TRIPS_PANEL]      = tripsPanel;   
+        middlePanels[TICKETS_PANEL]    = ticketsPanel; 
+        middlePanels[PAYMENTS_PANEL]   = paymentsPanel;
     }
 
     /**
@@ -312,6 +331,30 @@ public class MainPanel extends javax.swing.JPanel {
             // keep UI resilient if UsersPanel construction fails
             e.printStackTrace();
         }
+    }
+
+    public void updateButtons() {
+        int userRoleID = userLoginSession.getUserRoleId();
+        if (userRoleID == 1)
+            hideAdminButtons();
+        else if (userRoleID == 2)
+            showAdminButtons();
+    }
+
+    private void showAdminButtons() {
+        for (int i = 1; i < NUMBER_OF_INMIDDLE_PANELS; i++) {
+            middlePanels[i].showAdminButtons();
+        }
+        panels[CUSTOM_SQL_PANEL].setVisible(true);
+        customSqlButton.setVisible(true);
+    }
+
+    private void hideAdminButtons() {
+        for (int i = 1; i < NUMBER_OF_INMIDDLE_PANELS; i++) {
+            middlePanels[i].hideAdminButtons();
+        }
+        panels[CUSTOM_SQL_PANEL].setVisible(false);
+        customSqlButton.setVisible(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
