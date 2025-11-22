@@ -1,5 +1,8 @@
 package com.buspass.queries;
 
+import java.util.List;
+import java.util.Map;
+
 import com.buspass.db.QueryExecutionModule;
 
 public class TicketQuery {
@@ -57,13 +60,26 @@ public class TicketQuery {
     
     //#region ADMIN PRIVILEDGES
 
+    public List<Map<String, Object>> getTicketsOfUser(int userId) {
+        String sql = "SELECT TicketID, TicketDateTime, t.TripID, RouteName, StartLocation, EndLocation, TripDate, DepartureTime, ArrivalTime\r\n" + //
+                        "FROM User u JOIN Ticket t ON u.UserID = t.TicketID\r\n" + //
+                        "    JOIN Trip tr ON tr.TripID = t.TripID\r\n" + //
+                        "    JOIN Bus_Info b ON tr.BusID = b.BusID\r\n" + //
+                        "    JOIN Route r ON b.RouteID = r.RouteID\r\n" + //
+                        "WHERE u.UserID = ?";
+            
+        List<Map<String, Object>> users = QueryExecutionModule.executeQuery(sql, userId);
+        
+        return users;
+    }
+
     public boolean changeTripTo(int ticketId, int tripId) {
         String sql = "UPDATE Ticket SET TripID = ? WHERE TicketID = ?";
         int rowsAffected = QueryExecutionModule.executeUpdate(sql, tripId, ticketId);
         return rowsAffected > 0;
     }
 
-    public boolean removeTicket(int ticketId) {
+    public boolean deleteTicket(int ticketId) {
         String sql = "DELETE FROM Ticket WHERE TicketID = ?";
         int rowsAffected = QueryExecutionModule.executeUpdate(sql, ticketId);
         return rowsAffected > 0;

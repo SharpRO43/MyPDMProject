@@ -4,7 +4,10 @@
  */
 package com.buspass.gui.app_gui.middle_panels;
 
-import com.buspass.queries.BusQuery;
+import java.util.Map;
+
+import com.buspass.auth.UserLoginSession;
+import com.buspass.queries.TicketQuery;
 
 /**
  *
@@ -12,16 +15,18 @@ import com.buspass.queries.BusQuery;
  */
 public class TicketsPanel extends javax.swing.JPanel implements InMiddlePanel{
 
+    
+    private UserLoginSession userLoginSession;
+    private MiddlePanel middlePanel = new MiddlePanel();
+    private TicketQuery ticketQuery = new TicketQuery();
+    
     /**
      * Creates new form UsersPanel
      */
-    public TicketsPanel() {
+    public TicketsPanel(UserLoginSession userLoginSession) {
         initComponents();
+        this.userLoginSession = userLoginSession;
     }
-
-    private MiddlePanel middlePanel = new MiddlePanel();
-    private BusQuery busQuery = new BusQuery();
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -149,15 +154,39 @@ public class TicketsPanel extends javax.swing.JPanel implements InMiddlePanel{
     }// </editor-fold>//GEN-END:initComponents
 
     private void getTicketsOfUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_getTicketsOfUserButtonActionPerformed
-        // TODO add your handling code here:
+        String input = javax.swing.JOptionPane.showInputDialog(this, "Enter UserID to list tickets:",
+                "Tickets Of User", javax.swing.JOptionPane.QUESTION_MESSAGE);
+        if (input == null)
+            return;
+        input = input.trim();
+        if (input.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "UserID required.", "Input",
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        int userId;
+        try {
+            userId = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Invalid UserID.", "Input error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            middlePanel.setTableContents(resultTable, ticketQuery.getTicketsOfUser(userId));
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error fetching tickets: " + ex.getMessage(), "Error",
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }
     }//GEN-LAST:event_getTicketsOfUserButtonActionPerformed
 
     private void buyTicketButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buyTicketButtonActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_buyTicketButtonActionPerformed
 
     private void myTicketsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_myTicketsButtonActionPerformed
-        // TODO add your handling code here:
+        middlePanel.setTableContents(resultTable, ticketQuery.getTicketsOfUser(userLoginSession.getUserId()));
     }//GEN-LAST:event_myTicketsButtonActionPerformed
 
     private void changeToTripButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeToTripButtonActionPerformed

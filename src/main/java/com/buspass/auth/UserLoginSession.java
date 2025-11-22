@@ -46,7 +46,7 @@ public class UserLoginSession {
         // Fetch stored hash and role id for the user
         List<Map<String, Object>> results;
         results = QueryExecutionModule.executeQuery(
-            "SELECT UserID, UserPassword, FullName, Age, Phone, UserAddress, UserRoleID FROM `User` WHERE Username = ?", 
+            "SELECT UserID, Username, UserPassword, FullName, Age, Phone, UserAddress, UserRoleID FROM `User` WHERE Username = ?", 
             username
         );
 
@@ -58,7 +58,7 @@ public class UserLoginSession {
         Map<String, Object> user = results.get(0);
         Object pwObj = user.get("UserPassword");
         if (pwObj == null) {
-            setInfo(username, user);
+            setInfo(user);
 
             return 1; // no password set
         }
@@ -78,17 +78,17 @@ public class UserLoginSession {
         }
 
         if (matches) {
-            setInfo(username, user);
+            setInfo(user);
 
             return 1;
         }
         return 0;
     }
 
-    private void setInfo(String username, Map<String, Object> userInfo) {
+    private void setInfo(Map<String, Object> userInfo) {
         clearSessionInfo();
-        setUsername(username);
 
+        Object usernameObj = userInfo.get("Username");
         Object userIdObj   = userInfo.get("UserID");
         Object roleObj     = userInfo.get("UserRoleID");
         Object ageObj      = userInfo.get("Age");
@@ -96,18 +96,20 @@ public class UserLoginSession {
         Object addressObj  = userInfo.get("UserAddress");
         Object phoneObj    = userInfo.get("Phone");
 
+        if (fullNameObj != null)
+            setUsername(usernameObj.toString());
         if (userIdObj != null)
-                setUserId(Integer.parseInt(userIdObj.toString()));
-            if (roleObj != null)
-                setUserRoleId(Integer.parseInt(roleObj.toString()));
-            if (ageObj != null)
-                setAge(Integer.parseInt(ageObj.toString()));
-            if (fullNameObj != null)
-                setFullName(fullNameObj.toString());
-            if (addressObj != null)
-                setAddress(addressObj.toString());
-            if (phoneObj != null)
-                setPhoneNumber(phoneObj.toString());
+            setUserId(Integer.parseInt(userIdObj.toString()));
+        if (roleObj != null)
+            setUserRoleId(Integer.parseInt(roleObj.toString()));
+        if (ageObj != null)
+            setAge(Integer.parseInt(ageObj.toString()));
+        if (fullNameObj != null)
+            setFullName(fullNameObj.toString());
+        if (addressObj != null)
+            setAddress(addressObj.toString());
+        if (phoneObj != null)
+            setPhoneNumber(phoneObj.toString());
     }
 
     private void clearSessionInfo() {

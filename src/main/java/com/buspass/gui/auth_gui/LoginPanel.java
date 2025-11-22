@@ -214,12 +214,12 @@ public class LoginPanel extends javax.swing.JPanel {
                 case 1:
                     showDialogLoginSuccess(username);
 
-                    System.out.println(userLoginSession.getUserId());
-                    System.out.println(userLoginSession.getFullName());
-                    System.out.println(userLoginSession.getAge());
-                    System.out.println(userLoginSession.getAddress());
-                    System.out.println(userLoginSession.getPhoneNumber());
-                    System.out.println(userLoginSession.getUserRoleId());
+                    // System.out.println(userLoginSession.getUserId());
+                    // System.out.println(userLoginSession.getFullName());
+                    // System.out.println(userLoginSession.getAge());
+                    // System.out.println(userLoginSession.getAddress());
+                    // System.out.println(userLoginSession.getPhoneNumber());
+                    // System.out.println(userLoginSession.getUserRoleId());
 
                     if (appPanelSwitcher != null) {
                         appPanelSwitcher.showPanel("main");
